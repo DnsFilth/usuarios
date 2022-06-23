@@ -1,6 +1,25 @@
 <!-- p>users works!</p-->
 
+<h2>New User</h2>
+
+<div>
+  <label for="new-user">First name: </label>
+  <input id="new-user" #userFName />
+
+  <label for="new-user">Last name: </label>
+  <input id="new-user1" #userLName />
+
+  <label for="new-user">Email: </label>
+  <input id="new-user2" #userEmail />
+
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button type="button" class="add-button" (click)="add(userFName.value, userLName.value, userEmail.value); userFName.value=''; userLName.value=''; userEmail.value=''">
+    Add User
+  </button>
+</div>
+
 <h2>My Users</h2>
+
 <ul class="users">
   <li *ngFor="let user of users">
     <!--button [class.selected]="user === selectedUser" type="button" (click)="onSelect(user)">
@@ -10,6 +29,8 @@
     <a routerLink="/detail/{{user.id}}">
       <span class="badge">{{user.id}}</span> {{user.firstname}}
     </a>
+    <button type="button" class="delete" title="delete user"
+            (click)="delete(user)">x</button>
   </li>
 </ul>
 

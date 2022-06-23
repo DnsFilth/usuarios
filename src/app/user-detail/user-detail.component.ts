@@ -27,13 +27,20 @@ export class UserDetailComponent implements OnInit {
   }
 
   getUser(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
     this.userService.getUser(id)
       .subscribe(user => this.user = user);
   }
 
   goBack(): void {
     this.location.back();
+  }
+
+  save(): void {
+    if (this.user) {
+      this.userService.updateUser(this.user)
+        .subscribe(() => this.goBack());
+    }
   }
 
 }

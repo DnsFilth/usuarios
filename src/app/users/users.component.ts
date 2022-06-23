@@ -9,7 +9,6 @@ import { MessageService } from '../message.service';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-
   //selectedUser?: User;
   users: User[] = [];
 
@@ -27,6 +26,23 @@ export class UsersComponent implements OnInit {
 
   getUsers(): void {
     this.userService.getUsers().subscribe(users => this.users = users);
+  }
+
+  add(firstname: string, lastname: string, email: string): void {
+    firstname = firstname.trim();
+    lastname = lastname.trim();
+    email = email.trim();
+
+    if (!firstname) { return; }
+    this.userService.addUser({ firstname, lastname, email } as User)
+      .subscribe(user => {
+        this.users.push(user);
+      });
+  }
+
+  delete(user: User): void {
+    this.users = this.users.filter(h => h !== user);
+    this.userService.deleteUser(user.id).subscribe();
   }
 
 }
